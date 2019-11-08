@@ -1,0 +1,28 @@
+.image-mar-b
+{
+  margin-bottom: 50px;
+}
+
+.test2 
+{
+  margin-left:15px;
+  margin-right: 20px; 
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.box1
+{
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.title
+{
+  color: red;
+}
+
+.session_message
+{
+  margin-right: 15px;
+  margin-left: 15px;
+}
