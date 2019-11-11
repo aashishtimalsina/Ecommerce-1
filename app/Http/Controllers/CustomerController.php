@@ -13,4 +13,10 @@ class CustomerController extends Controller
 	    	return view('admin.customer.view-customer',compact('customer'));
 	    }    
 
+	public function view_customer($id)
+	{
+		$user = DB::table('users')->where('id',$id)->get()->first();
+		return view('admin.customer.customer_info',compact('user'));
+	}
+
 }

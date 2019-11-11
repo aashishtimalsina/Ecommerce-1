@@ -14,6 +14,7 @@ require 'admin.php';
 Route::get('/', function () {
 	return view('welcome');
 });
+Route::get('pagenotfound',['as' => 'notfound','uses' => 'ErrorController@pagenotfound']);
 Auth::routes();
 Route::group(['middleware'=> 'auth'],function()
 {

@@ -15,6 +15,6 @@ Route::group(['prefix'  =>  'admin'], function () {
     Route::POST('/removerole/{id}','RoleController@removeRole')->name('remove-role');
     Route::POST('/giverole/{id}','RoleController@giveRole')->name('give-role');
     Route::get('/viewcustomers','CustomerController@index')->name('view-customer');
-
+    Route::get('/viewcustomers/{id}','CustomerController@view_customer')->name('customer_info');
 });
 });

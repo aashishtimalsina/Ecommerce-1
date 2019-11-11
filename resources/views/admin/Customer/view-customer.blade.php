@@ -7,7 +7,7 @@ View Customers | Dashboard
 	<h2 align="center">Our Customers</h2>
 	<div class="col-md-1" ></div>
 @foreach($customer as $c)
-@if(Auth::user()->fullname)
+
 <?php 
 
 if ($c->profile_image) 
@@ -18,7 +18,8 @@ else
 {
 	$image = 'public/cd-admin/images/user.png';
 }
-?>
+?>	
+<a href="{{route('customer_info',$c->id)}}">
         <div class="col-md-3 rm">
           <!-- Widget: user widget style 1 -->
           <div class="box box-widget widget-user-2">
@@ -38,6 +39,7 @@ else
           </div>
           <!-- /.widget-user -->
         </div>
+       </a>
 @endforeach
       </div>
       <style type="text/css">
