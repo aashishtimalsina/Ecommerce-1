@@ -6,46 +6,65 @@ View Customers | Dashboard
 <div class="row">
 	<h2 align="center">Our Customers</h2>
 	<div class="col-md-1" ></div>
-@foreach($customer as $c)
+  <div class="col-md-10">
+   <div class="box">
+    <div class="box-body">
+      <table id="example1" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Verification status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($customer as $c)
+          <?php 
+          if ($c->email_verified_at) 
+          {
+            $class = 'btn btn-success';
+            $value = 'Verified';
+          }
+          else
+          {
+            $class = 'btn btn-danger';
+            $value = 'Not Verified';
+          }
+          ?>
+          <tr>
+            <td>{{$c->name}}</td>
+            <td>{{$c->email}}</td>
+            <td><button class='{{$class}}' disabled>{{$value}}</button></td>
+            <td>
+              <a href="{{route('customer_info',$c->id)}}">                    
+                <button class="btn btn-primary">View More Info</button>
+              </a>
+            </td>
+          </tr>
 
-<?php 
-
-if ($c->profile_image) 
-{
-	$image = 'public/uploads/customer/profile/'.$c->profile_image;
+          @endforeach
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Verification Status</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
+</div>
+<div class="col-md-1"></div>
+</div>
+<style type="text/css">
+ .rm
+ {
+  margin-top: 13px;
 }
-else
-{
-	$image = 'public/cd-admin/images/user.png';
-}
-?>	
-<a href="{{route('customer_info',$c->id)}}">
-        <div class="col-md-3 rm">
-          <!-- Widget: user widget style 1 -->
-          <div class="box box-widget widget-user-2">
-            <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-white">
-              <div class="widget-user-image">
-                <img class="img-circle" src="{{asset($image)}}" alt="User Avatar" style="margin: 5px;">
-              </div>
-              <!-- /.widget-user-image -->
-              <h3 class="widget-user-username">{{$c->name}}</h3>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked">
-                <li><a href="#">Email<span class="pull-right">{{$c->email}}</span></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /.widget-user -->
-        </div>
-       </a>
-@endforeach
-      </div>
-      <style type="text/css">
-      	.rm
-      	{
-      		margin-top: 13px;
-      	}
-      </style>
+</style>
 @endsection

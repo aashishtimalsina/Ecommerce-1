@@ -31,7 +31,7 @@ Add Role | Dashboard
 						@elseif($r->role == 'User')
 						<button type="button" class="btn bg-orange" disabled>{{$r->role}}</button>
 						@else
-
+						<button type="button" class="btn bg-white" disabled>{{$r->role}}</button>
 						@endif
 					</td>
 					<td align="center">

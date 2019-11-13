@@ -73,33 +73,17 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="{{route('view-role')}}"><i class="fa fa-eye"></i> View Roles</a></li>
-<!--           <li><a href="#"><i class="fa fa-edit"></i> Add Roles</a></li>
- -->
+          @if(Auth::user()->role == 'SuperAdmin')
+          <li><a href="{{route('add-roleform')}}"><i class="fa fa-edit"></i> Add Roles</a></li>
+          <li><a href="{{route('give-role-form')}}"><i class="fa fa-edit"></i> Give Role</a></li>
+          @endif
         </ul>
       </li>
-      @endif
       <li>
         <a href="{{route('view-customer')}}">
           <i class="fa fa-question"></i><span>View Customers</span>
         </a>
 
       </li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fa fa-commenting"></i>
-          <span>Feedback</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-            <small class="label pull-right bg-yellow">3</small>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="{{url('/viewfeedback')}}"><i class="fa fa-eye"></i> Inbox</a></li>
-          <li><a href="{{url('/viewfeedback/reply')}}"><i class="fa fa-edit"></i>Sent</a></li>
-
-        </ul>
-      </li>
-
-
-
+      @endif
     </aside>

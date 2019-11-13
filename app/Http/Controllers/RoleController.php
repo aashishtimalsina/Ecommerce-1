@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+
 class RoleController extends Controller
 {
 	public function index()
@@ -43,6 +46,66 @@ class RoleController extends Controller
 		$give['role'] = Request()->give;
 		DB::table('admins')->where('id',$id)->update($give);
 		return redirect('admin/viewrole');
+	}
+
+	public function addroleform()
+	{
+		if(Auth::user()->role == 'SuperAdmin')
+		{
+		return view('admin.Role.add-role-form');
+		}
+		else
+		{
+			return redirect('/pagenotfound');
+		}
+	}
+
+	public function storerole()
+	{
+
+		$data = Request()->validate([
+			'role_name' => 'required|unique:roles',
+		]);
+		$a['created_at'] = Carbon::now('Asia/Kathmandu');
+		$merge = array_merge($data,$a);
+		DB::table('roles')->insert($merge);
+		return redirect()->back();
+	}
+
+	public function giveRoleForm()
+	{
+		if(Auth::user()->role == 'SuperAdmin')
+		{
+		$role = DB::table('roles')->where('role_name', '!=', 'SuperAdmin')->get();
+		return view('admin.Role.give-role-form',compact('role'));
+		}
+		else
+		{
+			return redirect('/pagenotfound');
+		}
+
+	}
+
+	public function storeGivenRole()
+	{
+		if(Auth::user()->role == 'SuperAdmin')
+		{
+		$data = Request()->validate([
+			'name' => 'required|unique:admins',
+			'email' => 'required|unique:admins',
+			'role' => 'required',
+			'password' => 'required',
+		]);
+
+		$a['password'] = Hash::make(Request()->password);
+		$a['created_at'] = Carbon::now('Asia/Kathmandu');
+		$merge = array_merge($data,$a);
+		DB::table('admins')->insert($merge);
+		return redirect('/viewrole');
+		}
+		else
+			return redirect('/pagenotfound');
+
 	}
 
 }

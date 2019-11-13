@@ -12,8 +12,8 @@ Add Role | Dashboard
 	<legend align="center">Create Role</legend>
   <div class="form-group">
     <label>Role Name</label>
-    <input type="text" class="form-control" placeholder="Enter Role Name" name="name">
-    @error('name')
+    <input type="text" class="form-control" placeholder="Enter Role Name" name="role_name">
+    @error('role_name')
     <div class="text text-danger">{{ $message }}</div>
 @enderror
   </div>

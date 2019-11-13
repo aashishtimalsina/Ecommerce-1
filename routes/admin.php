@@ -16,5 +16,12 @@ Route::group(['prefix'  =>  'admin'], function () {
     Route::POST('/giverole/{id}','RoleController@giveRole')->name('give-role');
     Route::get('/viewcustomers','CustomerController@index')->name('view-customer');
     Route::get('/viewcustomers/{id}','CustomerController@view_customer')->name('customer_info');
+    Route::get('/viewroles/add','RoleController@addroleform')->name('add-roleform');
+    Route::POST('/viewroles/add','RoleController@storerole')->name('store-role');
+    Route::get('/viewroles/giverole','RoleController@giveRoleForm')->name('give-role-form');
+    Route::POST('/viewroles/giverole','RoleController@storeGivenRole')->name('store-given-role');
+
+
+
 });
 });
