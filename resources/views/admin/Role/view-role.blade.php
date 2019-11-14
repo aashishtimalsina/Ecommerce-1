@@ -13,7 +13,7 @@ Add Role | Dashboard
 					<th>User Name</th>
 					<th>Role</th>
 					@if(Auth::user()->role == 'SuperAdmin')
-					<th col="2">Action</th>
+					<th colspan="5">Action</th>
 					@endif
 				</tr>
 			</thead>
@@ -30,82 +30,64 @@ Add Role | Dashboard
 						<button type="button" class="btn bg-olive" disabled>{{$r->role}}</button>
 						@elseif($r->role == 'User')
 						<button type="button" class="btn bg-orange" disabled>{{$r->role}}</button>
-						@else
+						@elseif($r->role)
 						<button type="button" class="btn bg-white" disabled>{{$r->role}}</button>
+						@else
+
 						@endif
 					</td>
 					<td align="center">
-
-						@if(Auth::user()->name != $r->name)
-						@csrf
-						@if($r->role == 'Admin')
 						@if($r->role)
+						@if($r->role != 'SuperAdmin')
 						<form action="{{route('remove-role',$r->id)}}" method="POST">
 							@csrf
-							<button type="submit" class="btn btn-danger">Remove Admin</button>
+							<button class="btn btn-danger"> Remove {{$r->role}}</button>
+							<input type="hidden" name="remove" value="{{$r->role}}">
 						</form>
-						@else
-						<form action="{{route('give-role',$r->id)}}" method="POST"> 
-							@csrf
-							<button type="submit" class="btn btn-default">Make Admin </button>
-							<input type="hidden" name="give" value="Admin">
-
-						</form>
-						@endif
-						@elseif($r->role == 'User')
-						@if($r->role)
-						<form action="{{route('remove-role',$r->id)}}" method="POST">
-							@csrf
-							<button type="submit" class="btn btn-danger">Remove User</button>
-
-						</form>
-						@else
+						@foreach($roles as $ar)
+						@if($r->role != $ar->role_name)
 						<form action="{{route('give-role',$r->id)}}" method="POST">
 							@csrf
-							<button type="submit" class="btn btn-success">Make User</button>
-							<input type="hidden" name="give" value="User">
+							<button class="btn btn-success">Make {{$ar->role_name}}</button>
+							<input type="hidden" name="give" value="{{$ar->role_name}}">
+						</form>
+						@endif
+						@endforeach
+						@endif
+						@else
+							@foreach($roles as $ar)
+						<form action="{{route('give-role',$r->id)}}" method="POST">
+							@csrf
+							<button class="btn btn-success">Make {{$ar->role_name}}</button>
+							<input type="hidden" name="give" value="{{$ar->role_name}}">
+						</form>
+						@endforeach
+						@endif
+					</td>
+				</tr>
+				@elseif(Auth::user()->role == 'Admin')
+				<tr>
+					@if($r->role != 'SuperAdmin')
+					<td>{{$r->name}}</td>
+					<td>
+						@if($r->role == 'Admin')
+						<button type="button" class="btn bg-olive" disabled>{{$r->role}}</button>
+						@elseif($r->role == 'User')
+						<button type="button" class="btn bg-orange" disabled>{{$r->role}}</button>
+						@elseif($r->role)
+						<button type="button" class="btn bg-white" disabled>{{$r->role}}</button>
+						@else
 
-							@endif
-							@else
-							<div class="btn-group">
-								<form action="{{route('give-role',$r->id)}}" method="POST">
-								@csrf
-								<button type="submit" class="btn btn-success">Make Admin</button>
-								<input type="hidden" name="give" value="Admin">
-
-							</form>
-							<form action="{{route('give-role',$r->id)}}" method="POST">
-								@csrf
-								<button type="submit" class="btn btn-success">Make User</button>
-								<input type="hidden" name="give" value="User">
-
-							</form>
-							</div>
-							@endif
-						</a>
-					</form>
+						@endif
+					</td>
 					@endif
-				</td>
-			</tr>
-			@elseif(Auth::user()->role == 'Admin')
-			<tr>
-				@if($r->role != 'SuperAdmin')
-				<td>{{$r->name}}</td>
-				<td>
-					@if($r->role == 'Admin')
-					<button type="button" class="btn bg-olive" disabled>{{$r->role}}</button>
-					@elseif($r->role == 'User')
-					<button type="button" class="btn bg-orange" disabled>{{$r->role}}</button>
-					@endif
-				</td>
-@endif
-			</tr>
-			@endif
+				</tr>
+				@endif
 
-			@endforeach
-		</tbody>
-	</table>
-</div>
-<div class="col-md-1"></div>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-1"></div>
 </div>
 @endsection

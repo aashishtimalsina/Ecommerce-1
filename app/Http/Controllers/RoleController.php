@@ -13,8 +13,8 @@ class RoleController extends Controller
 	public function index()
 	{
 		$role = DB::table('admins')->get();
-
-		return view('admin.Role.view-role',compact('role'));
+		$roles = DB::table('roles')->where('role_name','!=','SuperAdmin')->get();
+		return view('admin.Role.view-role',compact('role','roles'));
 	}
 
 	public function removeRole($id)
@@ -101,10 +101,12 @@ class RoleController extends Controller
 		$a['created_at'] = Carbon::now('Asia/Kathmandu');
 		$merge = array_merge($data,$a);
 		DB::table('admins')->insert($merge);
-		return redirect('/viewrole');
+		return redirect('/admin/viewrole');
 		}
 		else
+		{
 			return redirect('/pagenotfound');
+		}
 
 	}
 
